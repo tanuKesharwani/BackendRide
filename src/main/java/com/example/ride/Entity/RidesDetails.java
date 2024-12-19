@@ -26,36 +26,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_registration")
-public class UserRegistration implements Serializable {
+@Table(name = "rides_details")
+public class RidesDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO) // Use AUTO for UUID generation
-	@Column(name = "user_id", updatable = false, nullable = false)
-	private UUID userId;
+	@Column(name = "ride_id", updatable = false, nullable = false)
+	private Long rideId;
 
-	@Column(name = "first_name", length = 50)
-	private String firstName;
-
-	@Column(name = "last_name", length = 50)
-	private String lastName;
-
-	@Column(name = "email_address", length = 320)
-	private String emailAddress;
-
-	@Column(name = "phone_number", length = 11)
-	private String phoneNumber;
-
-	@Column(name = "gender")
-	private String gender;
-
-	@Column(name = "blood_group")
-	private String bloodGroup;
-
-	@JdbcTypeCode(SqlTypes.JSON)
-	private GpsCoordinates Address;
+	@Column(name = "ride_details")
+	private String rideDetails;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@Column(name = "created_date", nullable = false)
@@ -65,13 +47,29 @@ public class UserRegistration implements Serializable {
 	@Column(name = "updated_date")
 	private Date updatedDate;
 
-	@Column(name = "device_id")
-	private String deviceId;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	@Column(name = "ride_start_time", nullable = false)
+	private Date rideStartTime;
 
-	@Column(name = "fcm_token")
-	private String fcmToken;
-	
-	@Column(name="license_number")
-	private String licenseNumber;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	@Column(name = "ride_ends_time")
+	private Date rideEndTime;
+
+	@Column(name = "ride_start_location")
+	@JdbcTypeCode(SqlTypes.JSON)
+	private GpsCoordinates rideStartLocation;
+
+	@Column(name = "ride_end_location")
+	@JdbcTypeCode(SqlTypes.JSON)
+	private GpsCoordinates rideEndLocation;
+
+	@Column(name = "created_by_user_id")
+	private UUID createdByUserId;
+
+	@Column(name = "updated_by_user_id")
+	private UUID updatedByUserId;
+
+	@Column(name = "ride_fare")
+	private String rideFare;
 
 }
