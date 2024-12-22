@@ -19,11 +19,15 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class UserRegistrationRequest {
 
+	public static final String LOGIN_USER = "/user/login-user";
+
 	private String firstName;
 
 	private String lastName;
 
 	private String emailAddress;
+
+	private String password;
 
 	private String phoneNumber;
 
