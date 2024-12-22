@@ -38,10 +38,10 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 
 	/**
 	 * Lazy create a simple success response
-	 * 
+	 *
 	 * @return {@link GenericWebServiceResponse}
 	 */
-	public static final GenericWebServiceResponse ok() {
+	public static  GenericWebServiceResponse ok() {
 		return new GenericWebServiceResponse(true, null);
 	}
 

@@ -2,7 +2,7 @@ package com.example.ride.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import com.example.ride.Crud.BikeDetailsCrud;
 import com.example.ride.Entity.BikeDetails;
 import com.example.ride.Request.UserRegistrationRequest;
@@ -22,7 +22,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 		bikeRide.setBikeCc("200");
 		bikeRide.setBikeModel("bullet");
 		bikeDetailsCrud.save(bikeRide);
-		return null;
+        List<BikeDetails> response = bikeDetailsCrud.findAll();
+		return new GenericWebServiceResponse(true,"create ",response);
 	}
 
 }
