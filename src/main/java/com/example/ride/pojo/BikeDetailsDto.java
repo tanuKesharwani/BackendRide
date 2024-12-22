@@ -20,9 +20,7 @@ public class BikeDetailsDto {
 
 	private String bikeNumber;
 
-	private String rideName;
-
-	private UUID userRegistrationId;
+	private UUID userId;
 
 	private String bikeModel;
 

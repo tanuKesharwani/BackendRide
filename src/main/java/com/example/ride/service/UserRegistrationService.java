@@ -6,4 +6,5 @@ import com.example.ride.pojo.GenericWebServiceResponse;
 public interface UserRegistrationService {
 
 	public GenericWebServiceResponse saveUserDetails(UserRegistrationRequest request);
+
 }

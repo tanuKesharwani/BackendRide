@@ -26,10 +26,13 @@ public class RidesDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long rideId; // Managed by a sequence generator
+	private String rideId;
 
 	@Field(name = "ride_details")
 	private String rideDetails;
+
+	@Field(name = "ride_name")
+	private String rideName;
 
 	@Field(name = "created_date")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

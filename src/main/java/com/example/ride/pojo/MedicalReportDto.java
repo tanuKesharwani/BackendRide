@@ -17,6 +17,6 @@ public class MedicalReportDto {
 
 	private UUID userId;
 
-	private String medical_condition;
+	private String medicalCondition;
 
 }

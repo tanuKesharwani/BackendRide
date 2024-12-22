@@ -16,11 +16,13 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class UserRegistrationDto {
 
-	private UUID userId;
+	private String userId;
 
 	private String firstName;
 
 	private String lastName;
+
+	private String userName;
 
 	private String emailAddress;
 

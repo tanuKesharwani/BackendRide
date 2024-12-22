@@ -1,11 +1,10 @@
-package com.example.ride.Entity;
+package com.example.ride.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "bike_details") // Specifies the MongoDB collection name
 public class BikeDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,9 +25,7 @@ public class BikeDetails implements Serializable {
 
 	private String bikeNumber;
 
-	private String rideName;
-
-	private UUID userRegistrationId;
+	private String userId;
 
 	private String bikeModel;
 
