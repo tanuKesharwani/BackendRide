@@ -10,6 +10,10 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Object payload;
 
 	public GenericWebServiceResponse() {
