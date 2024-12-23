@@ -1,7 +1,6 @@
 package com.example.ride.pojo;
 
 import java.util.Date;
-import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class UserRegistrationDto {
+
+	public static final String GET_ALL_USER_DETAILS = "/user/get-all-user-details";
+
+	public static final String UPDATE_USER_PROFILE = "/user/update-single-user-profile";
+
+	public static final String GET_SINGLE_USER_DETAILS = "/user/get-single-user-details";
 
 	private String userId;
 
@@ -43,5 +48,7 @@ public class UserRegistrationDto {
 	private String fcmToken;
 
 	private String licenseNumber;
+
+	private String password;
 
 }
