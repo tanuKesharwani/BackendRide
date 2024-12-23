@@ -20,6 +20,7 @@ import com.example.ride.pojo.UserRegistrationDto;
 import com.example.ride.service.UserRegistrationService;
 import com.example.ride.util.DuplicateRecordException;
 import com.example.ride.util.GenericException;
+import com.example.ride.util.ResourceNotFoundException;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -34,6 +35,10 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	public GenericWebServiceResponse saveUserDetails(UserRegistrationRequest request) {
 		log.info(request);
 		try {
+			if(request.getPhoneNumber()==null || request.getUserName()==null || request.getFirstName()==null)
+			{
+					throw new ResourceNotFoundException("Phone number not available");
+			}
 			UserRegistrationDto resp = null;
 			Optional<UserRegistration> userDetailsOptional = userRegistrationCrud
 					.findByPhoneNumber(request.getPhoneNumber());
@@ -75,7 +80,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 			throw new DuplicateRecordException(e.getMessage());
 		} catch (Exception e) {
 			throw new GenericException("An error occurred while saving user registration details for email address: "
-					+ request.getEmailAddress());
+					+ request.getEmailAddress()+e);
 		}
 
 	}
