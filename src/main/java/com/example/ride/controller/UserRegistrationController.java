@@ -26,9 +26,12 @@ public class UserRegistrationController {
 		return userRegistrationService.saveUserDetails(request);
 	}
 
-	}
+	
 
 	@PostMapping(LOGIN_USER)
 	public GenericWebServiceResponse loginUserDetails(@RequestBody UserRegistrationRequest request) {
+		
 		return userRegistrationService.userlogin(request);
+}
+
 }
