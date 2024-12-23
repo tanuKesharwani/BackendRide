@@ -2,6 +2,7 @@ package com.example.ride.controller;
 
 import static com.example.ride.Request.UserRegistrationRequest.SAVE_USER_DETAILS;
 
+import static com.example.ride.Request.UserRegistrationRequest.LOGIN_USER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,4 +26,9 @@ public class UserRegistrationController {
 		return userRegistrationService.saveUserDetails(request);
 	}
 
+	}
+
+	@PostMapping(LOGIN_USER)
+	public GenericWebServiceResponse loginUserDetails(@RequestBody UserRegistrationRequest request) {
+		return userRegistrationService.userlogin(request);
 }

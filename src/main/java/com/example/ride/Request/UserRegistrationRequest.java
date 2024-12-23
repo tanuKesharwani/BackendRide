@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class UserRegistrationRequest {
 
 	public static final String SAVE_USER_DETAILS = "/user/save-user-details";
+	public static final String LOGIN_USER = "/user/login-user";
 
 	private String firstName;
 
@@ -28,6 +29,8 @@ public class UserRegistrationRequest {
 	private String userName;
 
 	private String emailAddress;
+
+	private String password;
 
 	private String phoneNumber;
 

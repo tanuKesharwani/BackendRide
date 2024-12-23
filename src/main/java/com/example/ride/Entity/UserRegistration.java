@@ -43,6 +43,9 @@ public class UserRegistration implements Serializable {
 	@Field(name = "email_address")
 	private String emailAddress;
 
+	@Field(name = "password")
+	private String password;
+
 	@Field(name = "phone_number")
 	private String phoneNumber;
 

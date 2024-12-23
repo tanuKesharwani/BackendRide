@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.ride.Crud.UserRegistrationCrud;
@@ -31,14 +32,18 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	@Autowired
 	private UserRegistrationCrud userRegistrationCrud;
 
+	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 	@Override
 	public GenericWebServiceResponse saveUserDetails(UserRegistrationRequest request) {
 		log.info(request);
 		try {
-			if(request.getPhoneNumber()==null || request.getUserName()==null || request.getFirstName()==null)
+			if(request.getPhoneNumber()==null || request.getUserName()==null || request.getFirstName()==null||request.getPassword()==null)
 			{
-					throw new ResourceNotFoundException("Phone number not available");
+					throw new ResourceNotFoundException("mandatory fields Missing");
 			}
+			String hashedPassword = passwordEncoder.encode(request.getPassword());
+
 			UserRegistrationDto resp = null;
 			Optional<UserRegistration> userDetailsOptional = userRegistrationCrud
 					.findByPhoneNumber(request.getPhoneNumber());
@@ -58,7 +63,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 					.collect(Collectors.toList());
 
 			UserRegistration Details = UserRegistration.builder().firstName(request.getFirstName())
-					.lastName(request.getLastName()).userName(request.getUserName())
+					.lastName(request.getLastName()).userName(request.getUserName()).licenseBackImg(convertBase64ToBinary(request.getLicenseBackImg())).password(hashedPassword)
+
 					.emailAddress(request.getEmailAddress()).phoneNumber(request.getPhoneNumber())
 					.bloodGroup(request.getBloodGroup()).address(request.getAddress()).gender(request.getGender())
 					.licenseNumber(request.getLicenseNumber()).isVarifiedLicense(request.getIsVarifiedLicense())
@@ -93,6 +99,25 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException("Invalid Base64 data", e);
 		}
+			
+		
+		}
+	
+
+	@Override
+	public GenericWebServiceResponse userlogin(UserRegistrationRequest request) {
+		try {
+			UserRegistration user = userRegistrationCrud.findByPhoneNumber(request.getPhoneNumber())
+					.orElseThrow(() -> new RuntimeException("User with this phone number does not exist"));
+			if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+				throw new RuntimeException("Invalid credentials: Incorrect password");
+			}
+			return new GenericWebServiceResponse(true, "Login successful for user: " + user.getFirstName());
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e.getMessage());
+		} catch (Exception e) {
+			throw new GenericException("An error occurred while login the user " + request.getPhoneNumber());
 	}
 
+}
 }
