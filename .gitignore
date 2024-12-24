@@ -2,6 +2,7 @@
 ### Eclipse template
 
 .metadata
+.vscode
 bin/
 tmp/
 *.tmp
