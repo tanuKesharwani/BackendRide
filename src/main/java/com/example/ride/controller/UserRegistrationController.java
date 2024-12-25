@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ride.Request.UserListingRequest;
 import com.example.ride.Request.UserRegistrationRequest;
 import com.example.ride.pojo.GenericWebServiceResponse;
 import com.example.ride.pojo.UserRegistrationDto;
@@ -23,8 +24,8 @@ public class UserRegistrationController {
 	private UserRegistrationService userRegistrationService;
 
 	@PostMapping(GET_ALL_USER_DETAILS)
-	public GenericWebServiceResponse getUserDetails() {
-		return userRegistrationService.getAllUserDetails();
+	public GenericWebServiceResponse getUserDetails(@RequestBody UserListingRequest request) {
+		return userRegistrationService.getAllUserDetails(request);
 	}
 
 	@PostMapping(GET_SINGLE_USER_DETAILS)

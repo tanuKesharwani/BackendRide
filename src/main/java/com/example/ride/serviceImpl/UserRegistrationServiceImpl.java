@@ -8,11 +8,14 @@ import java.util.stream.Collectors;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.ride.Crud.UserRegistrationCrud;
 import com.example.ride.Entity.UserRegistration;
+import com.example.ride.Request.UserListingRequest;
 import com.example.ride.Request.UserRegistrationRequest;
 import com.example.ride.pojo.BikeDetails;
 import com.example.ride.pojo.GenericWebServiceResponse;
@@ -114,12 +117,15 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	}
 
 	@Override
-	public GenericWebServiceResponse getAllUserDetails() {
+	public GenericWebServiceResponse getAllUserDetails(UserListingRequest request) {
 		try {
-			List<UserRegistration> userDetails = userRegistrationCrud.findAll();
+			PageRequest pageable = PageRequest.of(request.getPagingAttrs().getPageNum(),
+					request.getPagingAttrs().getPageSize());
+			Page<UserRegistration> userDetails = userRegistrationCrud.findAll(pageable);
+
 			List<UserRegistrationDto> userDtos = userDetails.stream().map(this::mapToUserDto)
 					.collect(Collectors.toList());
-			return new GenericWebServiceResponse(true, "user Details fetched successfully: " + userDtos);
+			return new GenericWebServiceResponse(true, "user Details fetched successfully: ", userDtos);
 		} catch (Exception e) {
 			throw new GenericException("An error occurred while login the user ");
 		}
@@ -132,7 +138,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 			UserRegistration userDetails = userRegistrationCrud.findById(request.getUserId()).orElseThrow(
 					() -> new NoRecordFoundException("User not found for the given ID: " + request.getUserId()));
 			UserRegistrationDto resp = mapToUserDto(userDetails);
-			return new GenericWebServiceResponse(true, "Login successful for user: " + resp);
+			return new GenericWebServiceResponse(true, "Login successful for user: ", resp);
 		} catch (NoRecordFoundException e) {
 			log.error("No record found for userId: {}", request.getUserId(), e);
 			throw e;
@@ -154,8 +160,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 			userRegistrationCrud.save(userDetails);
 			System.out.println(userDetails.getUserName());
 			UserRegistrationDto resp = mapToUserDto(userDetails);
-
-			return new GenericWebServiceResponse(true, "update single userProfile of user: " + resp);
+			return new GenericWebServiceResponse(true, "update single userProfile of user: ", resp);
 
 		} catch (RuntimeException e) {
 			throw new RuntimeException(e.getMessage());
