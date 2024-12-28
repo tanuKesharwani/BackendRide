@@ -1,5 +1,7 @@
 package com.example.ride.pojo;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,12 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalReportDto {
+public class SponserDetails {
 
-	private Long medicalId;
+	@Id
+	private String sponserId;
 
-	private String userId;
-
-	private String medicalCondition;
-
+	private String sponserDetails;
+	
+	private String sponserName;
+	
 }

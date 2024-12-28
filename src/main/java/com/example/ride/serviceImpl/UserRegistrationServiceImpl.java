@@ -8,11 +8,14 @@ import java.util.stream.Collectors;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.ride.Crud.UserRegistrationCrud;
 import com.example.ride.Entity.UserRegistration;
+import com.example.ride.Request.UserListingRequest;
 import com.example.ride.Request.UserRegistrationRequest;
 import com.example.ride.pojo.BikeDetails;
 import com.example.ride.pojo.GenericWebServiceResponse;
@@ -79,6 +82,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 		} catch (DuplicateRecordException e) {
 			log.error("Duplicate email found", e);
 			throw new DuplicateRecordException(e.getMessage());
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("mandatory fields varification and premium need for ride create");
 		} catch (Exception e) {
 			throw new GenericException("An error occurred while saving user registration details for email address: "
 					+ request.getEmailAddress() + e);
@@ -114,12 +119,15 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	}
 
 	@Override
-	public GenericWebServiceResponse getAllUserDetails() {
+	public GenericWebServiceResponse getAllUserDetails(UserListingRequest request) {
 		try {
-			List<UserRegistration> userDetails = userRegistrationCrud.findAll();
+			PageRequest pageable = PageRequest.of(request.getPagingAttrs().getPageNum(),
+					request.getPagingAttrs().getPageSize());
+			Page<UserRegistration> userDetails = userRegistrationCrud.findAll(pageable);
+
 			List<UserRegistrationDto> userDtos = userDetails.stream().map(this::mapToUserDto)
 					.collect(Collectors.toList());
-			return new GenericWebServiceResponse(true, "user Details fetched successfully: " + userDtos);
+			return new GenericWebServiceResponse(true, "user Details fetched successfully: ", userDtos);
 		} catch (Exception e) {
 			throw new GenericException("An error occurred while login the user ");
 		}
@@ -132,7 +140,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 			UserRegistration userDetails = userRegistrationCrud.findById(request.getUserId()).orElseThrow(
 					() -> new NoRecordFoundException("User not found for the given ID: " + request.getUserId()));
 			UserRegistrationDto resp = mapToUserDto(userDetails);
-			return new GenericWebServiceResponse(true, "Login successful for user: " , resp);
+			return new GenericWebServiceResponse(true, "Login successful for user: ", resp);
 		} catch (NoRecordFoundException e) {
 			log.error("No record found for userId: {}", request.getUserId(), e);
 			throw e;
@@ -145,17 +153,29 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	public GenericWebServiceResponse updateSingleUserDetails(UserRegistrationDto request) {
 		log.info(request);
 		try {
+
+			List<BikeDetails> bikeDetailsList = request.getBikeDetails().stream()
+					.map(bikeDetailDto -> BikeDetails.builder().bikeNumber(bikeDetailDto.getBikeNumber())
+							.bikeModel(bikeDetailDto.getBikeModel()).bikeCc(bikeDetailDto.getBikeCc())
+							.serviceDate(bikeDetailDto.getServiceDate()).build())
+					.collect(Collectors.toList());
+
+			List<MedicalReport> medicalReportsList = request.getMedicalReport().stream()
+					.map(medicalReportDto -> MedicalReport.builder()
+							.medicalCondition(medicalReportDto.getMedicalCondition()).build())
+					.collect(Collectors.toList());
 			UserRegistration userDetails = userRegistrationCrud.findById(request.getUserId())
 					.orElseThrow(() -> new RuntimeException("User with this Id does not exist"));
+
 			userDetails.setAddress(request.getAddress());
 			userDetails.setUserName(request.getUserName());
-			String hashedPassword = passwordEncoder.encode(request.getPassword());
-			userDetails.setPassword(hashedPassword);
+			userDetails.setBikeDetails(bikeDetailsList);
+			userDetails.setMedicalReport(medicalReportsList);
+
 			userRegistrationCrud.save(userDetails);
 			System.out.println(userDetails.getUserName());
 			UserRegistrationDto resp = mapToUserDto(userDetails);
-
-			return new GenericWebServiceResponse(true, "update single userProfile of user: " + resp);
+			return new GenericWebServiceResponse(true, "update single userProfile of user: ", resp);
 
 		} catch (RuntimeException e) {
 			throw new RuntimeException(e.getMessage());
