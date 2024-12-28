@@ -132,7 +132,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 			UserRegistration userDetails = userRegistrationCrud.findById(request.getUserId()).orElseThrow(
 					() -> new NoRecordFoundException("User not found for the given ID: " + request.getUserId()));
 			UserRegistrationDto resp = mapToUserDto(userDetails);
-			return new GenericWebServiceResponse(true, "Login successful for user: " + resp);
+			return new GenericWebServiceResponse(true, "Login successful for user: " , resp);
 		} catch (NoRecordFoundException e) {
 			log.error("No record found for userId: {}", request.getUserId(), e);
 			throw e;
