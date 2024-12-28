@@ -17,7 +17,7 @@ local.properties
 .loadpath
 .recommenders
 */target/*
-
+*/resources/*
 */.project
 */.classpath
 */.factorypath
