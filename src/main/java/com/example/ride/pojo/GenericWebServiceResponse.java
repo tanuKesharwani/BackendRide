@@ -23,6 +23,7 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 		this.payload = payload;
 		setSuccess(true);
 	}
+	
 
 	public GenericWebServiceResponse(boolean success, String message, Object payload) {
 		setSuccess(success);
@@ -34,7 +35,10 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 		setSuccess(success);
 		setMessage(message);
 	}
-
+	public GenericWebServiceResponse(boolean success, String message,int statusCode) {
+		setSuccess(success);
+		setMessage(message);
+	}
 	public void setErrorMessage(String message) {
 		setSuccess(false);
 		setMessage(message);
@@ -46,7 +50,7 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 	 * @return {@link GenericWebServiceResponse}
 	 */
 	public static  GenericWebServiceResponse ok() {
-		return new GenericWebServiceResponse(true, null);
+		return new GenericWebServiceResponse(true, null,200);
 	}
 
 }

@@ -1,8 +1,10 @@
-package com.example.ride.pojo;
+package com.example.ride.Request;
 
 import java.util.Date;
 import java.util.List;
 
+import com.example.ride.pojo.GpsCoordinates;
+import com.example.ride.pojo.SponserDetails;
 import com.example.ride.pojo.Enums.RideTypes;
 
 import lombok.AllArgsConstructor;
@@ -16,19 +18,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class RideDetailsDto {
+public class RideDetailsRequest {
 
-	public static final String UPDATE_RIDE_DETAILS = "/update/ride-details";
-
-	private String rideId;
-
+	public static final String CREATE_RIDE_DETAILS = "/create/save-ride-details";
+	public static final String NEAR_BY_RIDE_DETAILS = "/ride/find";
 	private String rideName;
 
 	private String rideDetails;
-
-	private Date createdDate;
-
-	private Date updatedDate;
 
 	private Date rideStartTime;
 
@@ -40,16 +36,17 @@ public class RideDetailsDto {
 
 	private String createdByUserId;
 
-	private String updatedByUserId;
-
 	private String rideFare;
 
 	private RideTypes rideType;
 
 	private String maxRiderAlllowed;
 
-	private Boolean isRidePremiumHolder; // initial true
+
+	private List<GpsCoordinates> stayPoints;
 
 	private List<String> userId;
+
+	private SponserDetails sponsersDetails;
 
 }

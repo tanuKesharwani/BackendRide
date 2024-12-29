@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.example.ride.pojo.BikeDetails;
 import com.example.ride.pojo.GpsCoordinates;
 import com.example.ride.pojo.MedicalReport;
+import com.example.ride.pojo.PremiumDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -84,6 +85,12 @@ public class UserRegistration implements Serializable {
 	@Field(name = "license_back_img")
 	private Binary licenseBackImg;
 
+	@Field(name="is_premium")
+	private Boolean isPremium;
+
+	@Field(name="premium_details")
+	private PremiumDetails premiumDetails;
+	
 	private List<BikeDetails> bikeDetails;
 
 	private List<MedicalReport> medicalReport;

@@ -82,6 +82,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 		} catch (DuplicateRecordException e) {
 			log.error("Duplicate email found", e);
 			throw new DuplicateRecordException(e.getMessage());
+		} catch (ResourceNotFoundException e) {
+			throw new ResourceNotFoundException("mandatory fields varification and premium need for ride create");
 		} catch (Exception e) {
 			throw new GenericException("An error occurred while saving user registration details for email address: "
 					+ request.getEmailAddress() + e);
@@ -151,12 +153,25 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	public GenericWebServiceResponse updateSingleUserDetails(UserRegistrationDto request) {
 		log.info(request);
 		try {
+
+			List<BikeDetails> bikeDetailsList = request.getBikeDetails().stream()
+					.map(bikeDetailDto -> BikeDetails.builder().bikeNumber(bikeDetailDto.getBikeNumber())
+							.bikeModel(bikeDetailDto.getBikeModel()).bikeCc(bikeDetailDto.getBikeCc())
+							.serviceDate(bikeDetailDto.getServiceDate()).build())
+					.collect(Collectors.toList());
+
+			List<MedicalReport> medicalReportsList = request.getMedicalReport().stream()
+					.map(medicalReportDto -> MedicalReport.builder()
+							.medicalCondition(medicalReportDto.getMedicalCondition()).build())
+					.collect(Collectors.toList());
 			UserRegistration userDetails = userRegistrationCrud.findById(request.getUserId())
 					.orElseThrow(() -> new RuntimeException("User with this Id does not exist"));
+
 			userDetails.setAddress(request.getAddress());
 			userDetails.setUserName(request.getUserName());
-			String hashedPassword = passwordEncoder.encode(request.getPassword());
-			userDetails.setPassword(hashedPassword);
+			userDetails.setBikeDetails(bikeDetailsList);
+			userDetails.setMedicalReport(medicalReportsList);
+
 			userRegistrationCrud.save(userDetails);
 			System.out.println(userDetails.getUserName());
 			UserRegistrationDto resp = mapToUserDto(userDetails);

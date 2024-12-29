@@ -1,6 +1,7 @@
 package com.example.ride.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,5 +51,9 @@ public class UserRegistrationDto {
 	private String licenseNumber;
 
 	private String password;
+
+	private List<BikeDetailsDto> BikeDetails;
+
+	private List<MedicalReportDto> medicalReport;
 
 }

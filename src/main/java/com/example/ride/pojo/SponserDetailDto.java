@@ -3,18 +3,20 @@ package com.example.ride.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalReportDto {
+@EqualsAndHashCode
+public class SponserDetailDto {
 
-	private Long medicalId;
+	private String sponserId;
 
-	private String userId;
-
-	private String medicalCondition;
-
+	private String sponserDetails;
+	
+	private String sponserName;
+	
 }
