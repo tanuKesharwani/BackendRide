@@ -1,6 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-### Eclipse template
 
+### Eclipse template
 .metadata
 .vscode
 bin/
@@ -59,16 +59,18 @@ local.properties
 # Code Recommenders
 .recommenders/
 
-# Scala IDE specific (Scala & Java development for Eclipse)
+# Scala IDE specific
 .cache-main
 .scala_dependencies
 .worksheet
+
 ### Java template
 # Compiled class file
 *.class
 
-# Log file
+# Log files
 *.log
+logs/
 
 # BlueJ files
 *.ctxt
@@ -76,7 +78,7 @@ local.properties
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -85,11 +87,58 @@ local.properties
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Virtual machine crash logs
 hs_err_pid*
 
 # IntelliJ specific files and folders
 .idea/
 *.iml
 
-/target
+# Build directories
+/target/
+*/target/
+
+# Application specific
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+src/main/resources/application.yml
+src/main/resources/application-*.yml
+.env
+
+# AWS credentials and config files
+.aws/
+aws.properties
+aws-credentials.properties
+**/aws.properties
+**/aws-credentials.properties
+
+# Sensitive configuration files
+**/application-dev.properties
+**/application-prod.properties
+**/application-local.properties
+**/application-staging.properties
+
+# Specific application folders you want to ignore
+# Add your application specific folders here
+your-application-folder/
+build/
+dist/
+
+# Maven specific
+.mvn/
+mvnw
+mvnw.cmd
+
+# Gradle specific
+.gradle/
+build/
+
+# Node modules if you're using any frontend framework
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
