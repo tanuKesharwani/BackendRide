@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.ride.pojo.GpsCoordinates;
 import com.example.ride.pojo.SponserDetails;
+import com.example.ride.pojo.Enums.RideTypes;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class RideDetailsRequest {
 
 	public static final String CREATE_RIDE_DETAILS = "/create/save-ride-details";
-
+	public static final String NEAR_BY_RIDE_DETAILS = "/ride/find";
 	private String rideName;
 
 	private String rideDetails;
@@ -37,11 +38,10 @@ public class RideDetailsRequest {
 
 	private String rideFare;
 
-	private String rideType;
+	private RideTypes rideType;
 
 	private String maxRiderAlllowed;
 
-	private Boolean isRidePremiumHolder; // initial true
 
 	private List<GpsCoordinates> stayPoints;
 

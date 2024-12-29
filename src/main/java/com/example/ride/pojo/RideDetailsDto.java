@@ -3,6 +3,8 @@ package com.example.ride.pojo;
 import java.util.Date;
 import java.util.List;
 
+import com.example.ride.pojo.Enums.RideTypes;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +44,7 @@ public class RideDetailsDto {
 
 	private String rideFare;
 
-	private String rideType;
+	private RideTypes rideType;
 
 	private String maxRiderAlllowed;
 

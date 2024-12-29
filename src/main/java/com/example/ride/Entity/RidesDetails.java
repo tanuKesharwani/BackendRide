@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.ride.pojo.GpsCoordinates;
 import com.example.ride.pojo.SponserDetails;
+import com.example.ride.pojo.Enums.RideTypes;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,9 +56,11 @@ public class RidesDetails implements Serializable {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private Date rideEndTime;
 
+	@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
 	@Field(name = "ride_start_location")
 	private GpsCoordinates rideStartLocation;
 
+	@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
 	@Field(name = "ride_end_location")
 	private GpsCoordinates rideEndLocation;
 
@@ -68,13 +74,10 @@ public class RidesDetails implements Serializable {
 	private String rideFare;
 
 	@Field(name = "ride_type")
-	private String rideType;
+	private RideTypes rideType;
 
 	@Field(name = "max_rider_allowed")
 	private String maxRiderAlllowed;
-
-	@Field(name = "is_ride_premium_holder")
-	private Boolean isRidePremiumHolder; // initial true
 
 	@Field(name = "joined_user")
 	private List<String> userId;
@@ -85,4 +88,23 @@ public class RidesDetails implements Serializable {
 	@Field(name="sponser_details")
 	private SponserDetails sponserDetails;
 
+	@Field("coordinates")
+    private double[] coordinates;
+
+    // This will be called before saving to MongoDB
+    public void initializeGeoLocations() {
+        if (rideStartLocation != null) {
+            rideStartLocation.initializeGeoJson();
+        }
+        if (rideEndLocation != null) {
+            rideEndLocation.initializeGeoJson();
+        }
+        if (stayPoints != null) {
+            stayPoints.forEach(point -> {
+                if (point != null) {
+                    point.initializeGeoJson();
+                }
+            });
+        }
+    }
 }
