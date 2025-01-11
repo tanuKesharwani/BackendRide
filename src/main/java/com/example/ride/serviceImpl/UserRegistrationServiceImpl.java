@@ -36,6 +36,10 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 	@Autowired
 	private UserRegistrationCrud userRegistrationCrud;
 
+	@Autowired
+	private PushNotificationService pushNotificationService;
+	@Autowired
+	private TwilioService twilioService;
 	private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
@@ -194,4 +198,14 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 		return resp;
 	}
 
+	@Override
+	public GenericWebServiceResponse sendNotification(String fcmToken) {
+		try {
+			// pushNotificationService.send(fcmToken, "Hi kaisn baruu aee ho faguuu");
+			twilioService.sendOtp(fcmToken);
+			return new GenericWebServiceResponse(true, "nofication sent to fcm",fcmToken);
+		} catch (Exception e) {
+			throw new GenericException("An error occurred while login the user ");
+		}
+	}
 }

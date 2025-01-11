@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ride.Request.NotificationRequest;
 import com.example.ride.Request.UserListingRequest;
 import com.example.ride.Request.UserRegistrationRequest;
 import com.example.ride.pojo.GenericWebServiceResponse;
@@ -47,5 +48,8 @@ public class UserRegistrationController {
 	public GenericWebServiceResponse updateUserDetails(@RequestBody UserRegistrationDto request) {
 		return userRegistrationService.updateSingleUserDetails(request);
 	}
-
+	@PostMapping("/sendNotification")
+	public GenericWebServiceResponse sendNotification(@RequestBody NotificationRequest request) {
+		return userRegistrationService.sendNotification(request.getFcmToken());
+	}
 }

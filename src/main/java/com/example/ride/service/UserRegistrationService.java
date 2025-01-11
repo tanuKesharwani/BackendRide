@@ -16,5 +16,6 @@ public interface UserRegistrationService {
 	public GenericWebServiceResponse updateSingleUserDetails(UserRegistrationDto request);
 
 	public GenericWebServiceResponse getAllUserDetails(UserListingRequest request);
-
+	
+	public GenericWebServiceResponse sendNotification(String fcmToken);
 }

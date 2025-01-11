@@ -50,6 +50,23 @@
     <artifactId>aws-java-sdk-s3</artifactId>
     <version>1.12.780</version>
 </dependency>
+<dependency>
+<groupId>com.google.firebase</groupId>
+<artifactId>firebase-admin</artifactId>
+<version>9.4.1</version>
+<exclusions>
+<exclusion>
+<groupId>commons-logging</groupId>
+<artifactId>commons-logging</artifactId>
+</exclusion>
+</exclusions>
+</dependency>
+<dependency>
+<groupId>com.twilio.sdk</groupId>
+<artifactId>twilio</artifactId>
+<version>8.21.0</version>
+<!--  Use the latest version  -->
+</dependency>
 
 
 		<dependency>
