@@ -2,6 +2,8 @@ package com.example.ride.Request;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.ride.pojo.BikeDetailsDto;
 import com.example.ride.pojo.GpsCoordinates;
 import com.example.ride.pojo.MedicalReportDto;
@@ -28,6 +30,9 @@ public class UserRegistrationRequest {
 	private String lastName;
 
 	private String userName;
+
+	private MultipartFile profileImage;
+
 
 	private String emailAddress;
 

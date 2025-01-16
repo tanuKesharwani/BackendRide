@@ -81,6 +81,9 @@ public class RidesDetails implements Serializable {
 
 	@Field(name = "joined_user")
 	private List<String> userId;
+
+	@Field(name = "requested_user")
+	private List<String> requestedUser;
 	
 	@Field(name="stay_points")
 	private List<GpsCoordinates> stayPoints;

@@ -50,7 +50,7 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 	 * @return {@link GenericWebServiceResponse}
 	 */
 	public static  GenericWebServiceResponse ok() {
-		return new GenericWebServiceResponse(true, null,200);
+		return new GenericWebServiceResponse(true, "SUCCESS",200);
 	}
 
 }

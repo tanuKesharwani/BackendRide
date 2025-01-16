@@ -1,5 +1,6 @@
 package com.example.ride.Crud;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,4 +12,6 @@ import com.example.ride.Entity.UserRegistration;
 public interface UserRegistrationCrud extends MongoRepository<UserRegistration, String> {
 
 	Optional<UserRegistration> findByPhoneNumber(String phoneNumber);
+	List<UserRegistration> findByUserIdIn(List<String> userIds);
+
 }

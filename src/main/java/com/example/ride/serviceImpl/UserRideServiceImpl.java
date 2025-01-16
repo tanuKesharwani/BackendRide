@@ -1,6 +1,8 @@
 package com.example.ride.serviceImpl;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.example.ride.Entity.RidesDetails;
 import com.example.ride.Entity.UserRegistration;
 import com.example.ride.Request.CommunityFeedRequest;
 import com.example.ride.Request.RideDetailsRequest;
+import com.example.ride.Request.RideInviteRequest;
 import com.example.ride.helper.CreateCommunityFeedFromRide;
 import com.example.ride.helper.GenerateFeedBackDescription;
 import com.example.ride.pojo.GenericWebServiceResponse;
@@ -34,6 +37,8 @@ public class UserRideServiceImpl implements UserRideService {
 	@Autowired
 	private UserRegistrationCrud userRegistrationCrud;
 
+	@Autowired
+	private PushNotificationService pushNotificationService;
 	@Autowired
 	private CommunityFeedService communityFeedService;
 	@Override
@@ -155,6 +160,36 @@ public class UserRideServiceImpl implements UserRideService {
             log.error("Failed to create community feed for ride {}: {}", ride.getRideId(), e.getMessage());
         }
     }
+   
+	public void sendInviteToRides(RideInviteRequest request)
+	{
+		 try {
+            // Step 1: Fetch users from the database using the provided list of user IDs
+            List<UserRegistration> invitedUsers = userRegistrationCrud.findByUserIdIn(request.getInvitedUserId());
 
+            // Step 2: Extract FCM tokens from the users
+            List<String> fcmTokens = invitedUsers.stream()
+                                                  .map(UserRegistration::getFcmToken)
+												  .filter(token -> token != null) // Assuming User has a getFcmToken() method
+                                                  .collect(Collectors.toList());
+
+            // Step 3: Send notifications to the users using their FCM tokens
+            pushNotificationService.sendToMultipleTokens(fcmTokens, "You are invited to a ride!");
+
+            // Step 4: Save the invited users' IDs to the RideDetails
+            RidesDetails rideDetails = rideDetailsCrud.findByRideId(request.getRideId());
+            if (rideDetails == null) {
+                // Handle the case when ride details are not found (maybe throw an exception)
+                throw new RuntimeException("Ride not found");
+            }
+
+            rideDetails.setRequestedUser(request.getInvitedUserId());
+            rideDetailsCrud.save(rideDetails);
+
+        } catch (Exception e) {
+            // Handle exception, log it or rethrow it
+            System.err.println("Error sending ride invite: " + e.getMessage());
+        }
+	}
 	
 }

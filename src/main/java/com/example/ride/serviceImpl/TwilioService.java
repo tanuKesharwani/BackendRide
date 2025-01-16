@@ -39,12 +39,12 @@ public class TwilioService {
         return otp.toString();
     }
 
-    public void sendOtp(String recipientPhoneNumber) {
+    public String sendOtp(String recipientPhoneNumber) {
         try {
             String otp  = generateOtp();
-            System.out.println(otp);
             Message.creator(new PhoneNumber(recipientPhoneNumber), new PhoneNumber(twilioPhoneNumber),
-                    "Your OTP code is: " + generateOtp()).create();
+                    "Your OTP code is: " + otp).create();
+            return otp;
         } catch (Exception e) {
             throw new RuntimeException("Failed to send OTP: " + e.getMessage(), e);
         }

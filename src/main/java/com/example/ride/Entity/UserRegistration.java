@@ -80,11 +80,12 @@ public class UserRegistration implements Serializable {
 	private Boolean isVarifiedLicense;
 
 	@Field(name = "license_Front_img")
-	private Binary licenseFrontImg;
+	private String licenseFrontImg;
 
 	@Field(name = "license_back_img")
-	private Binary licenseBackImg;
-
+	private String licenseBackImg;
+	@Field(name = "profile_image")
+	private String profileImage;
 	@Field(name="is_premium")
 	private Boolean isPremium;
 
