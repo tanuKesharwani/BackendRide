@@ -12,4 +12,7 @@ import com.example.ride.Entity.RidesDetails;
 public interface RidesDetailsCrud extends MongoRepository<RidesDetails, String> {
     @Query("{ 'ride_start_location': { $near: { $geometry: { type: 'Point', coordinates: ?0 }, $maxDistance: ?1 } } }")
     List<RidesDetails> findNearbyRides(double[] coordinates, double maxDistanceInMeters);
+
+    RidesDetails findByRideId(String rideId);
+
 }

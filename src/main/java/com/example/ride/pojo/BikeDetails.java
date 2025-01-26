@@ -25,8 +25,7 @@ public class BikeDetails implements Serializable {
 
 	private String bikeNumber;
 
-	private String userId;
-
+	private String bikeBrand;
 	private String bikeModel;
 
 	private String bikeCc;
