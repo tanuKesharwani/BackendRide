@@ -1,10 +1,12 @@
 package com.example.ride.Entity;
 
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,16 +17,26 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "medical_report")
-public class MedicalReport implements Serializable {
+@Document(collection = "OTP_Status")
+public class OtpVerificationEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long medicalId; // Managed by a sequence generator
+	private String id; 
 
-	private UUID userId;
+	
 
-	private String medicalCondition;
+	@Field(name = "phone_number")
+	private String phoneNumber;
+
+	@Field(name = "OTP")
+	private String OTP;
+
+	@Field(name="created_at")
+    private Date createdAt;
+
+	
+	
 
 }

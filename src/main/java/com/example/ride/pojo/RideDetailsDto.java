@@ -1,7 +1,9 @@
 package com.example.ride.pojo;
 
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
+
+import com.example.ride.pojo.Enums.RideTypes;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +18,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class RideDetailsDto {
 
-	private Long rideId;
+	public static final String UPDATE_RIDE_DETAILS = "/update/ride-details";
+
+	private String rideId;
+
+	private String rideName;
 
 	private String rideDetails;
 
@@ -32,10 +38,18 @@ public class RideDetailsDto {
 
 	private GpsCoordinates rideEndLocation;
 
-	private UUID createdByUserId;
+	private String createdByUserId;
 
-	private UUID updatedByUserId;
+	private String updatedByUserId;
 
 	private String rideFare;
+
+	private RideTypes rideType;
+
+	private String maxRiderAlllowed;
+
+	private Boolean isRidePremiumHolder; // initial true
+
+	private List<String> userId;
 
 }

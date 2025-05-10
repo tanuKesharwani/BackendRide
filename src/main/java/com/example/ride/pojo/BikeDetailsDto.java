@@ -16,13 +16,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class BikeDetailsDto {
 
-	private Long bikeId;
+	private String bikeId;
 
 	private String bikeNumber;
 
-	private String rideName;
-
-	private UUID userRegistrationId;
+	private String userId;
 
 	private String bikeModel;
 

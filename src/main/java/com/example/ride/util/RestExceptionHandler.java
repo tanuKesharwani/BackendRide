@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RestExceptionHandler {
-	
+
 	@ExceptionHandler(value = GenericException.class)
 	public ResponseEntity<ErrorResponse> handleGenericException(GenericException ex) {
 		ErrorResponse error = new ErrorResponse(500, ex.getMessage(), new Date());
 		return new ResponseEntity<ErrorResponse>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	@ExceptionHandler(value = DuplicateRecordException.class)
 	public ResponseEntity<ErrorResponse> handleDuplicateRecordException(DuplicateRecordException ex) {
 		ErrorResponse error = new ErrorResponse(409, ex.getMessage(), new Date());
 		return new ResponseEntity<ErrorResponse>(error,HttpStatus.CONFLICT);
 	}
-	
+
 	@ExceptionHandler(value = NoRecordFoundException.class)
 	public ResponseEntity<ErrorResponse> handleNoRecordFoundException(NoRecordFoundException ex) {
 		ErrorResponse error = new ErrorResponse(400, ex.getMessage(), new Date());
@@ -48,5 +48,5 @@ public class RestExceptionHandler {
 		ErrorResponse error = new ErrorResponse(404, ex.getMessage(), new Date());
 		return new ResponseEntity<ErrorResponse>(error,HttpStatus.NOT_FOUND);
 	}
-	
+
 }

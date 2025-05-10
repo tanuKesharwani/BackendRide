@@ -10,6 +10,10 @@ import lombok.EqualsAndHashCode;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Object payload;
 
 	public GenericWebServiceResponse() {
@@ -19,6 +23,7 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 		this.payload = payload;
 		setSuccess(true);
 	}
+	
 
 	public GenericWebServiceResponse(boolean success, String message, Object payload) {
 		setSuccess(success);
@@ -30,7 +35,10 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 		setSuccess(success);
 		setMessage(message);
 	}
-
+	public GenericWebServiceResponse(boolean success, String message,int statusCode) {
+		setSuccess(success);
+		setMessage(message);
+	}
 	public void setErrorMessage(String message) {
 		setSuccess(false);
 		setMessage(message);
@@ -38,11 +46,11 @@ public class GenericWebServiceResponse extends AbstractWebServiceResponse {
 
 	/**
 	 * Lazy create a simple success response
-	 * 
+	 *
 	 * @return {@link GenericWebServiceResponse}
 	 */
-	public static final GenericWebServiceResponse ok() {
-		return new GenericWebServiceResponse(true, null);
+	public static  GenericWebServiceResponse ok() {
+		return new GenericWebServiceResponse(true, "SUCCESS",200);
 	}
 
 }
